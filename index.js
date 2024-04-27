@@ -43,10 +43,27 @@ async function run() {
       res.send(result);
     });
 
+    app.get("/my-tour/:query", async (req, res) => {
+      const email = req.params.query;
+
+      const result = await tourCollections.find({ email: email }).toArray();
+
+      res.send(result);
+    });
+
     app.post("/add-tour", async (req, res) => {
       const tour = req.body;
 
       const result = tourCollections.insertOne(tour);
+
+      res.send(result);
+    });
+
+    app.delete("/delete-tour/:id", async (req, res) => {
+      const id = req.params.id;
+
+      const query = { _id: new ObjectId(id) };
+      const result = await tourCollections.deleteOne(query);
 
       res.send(result);
     });
