@@ -27,6 +27,13 @@ async function run() {
 
     const tourCollections = client.db("tours").collection("allTours");
 
+    app.get("/all-tour", async (req, res) => {
+      const cursur = tourCollections.find();
+      const result = await cursur.toArray();
+
+      res.send(result);
+    });
+
     app.post("/add-tour", async (req, res) => {
       const tour = req.body;
 
