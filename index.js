@@ -26,6 +26,7 @@ async function run() {
     await client.connect();
 
     const tourCollections = client.db("tours").collection("allTours");
+    const countryCollection = client.db("tours").collection("allCountry");
 
     app.get("/tour/:id", async (req, res) => {
       const id = req.params.id;
@@ -95,6 +96,14 @@ async function run() {
       const query = { _id: new ObjectId(id) };
       const result = await tourCollections.deleteOne(query);
 
+      res.send(result);
+    });
+
+    // Country data
+
+    app.get("/all-country", async (req, res) => {
+      const cursur = countryCollection.find();
+      const result = await cursur.toArray();
       res.send(result);
     });
 
